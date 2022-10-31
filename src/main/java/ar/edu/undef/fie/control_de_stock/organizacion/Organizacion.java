@@ -39,71 +39,57 @@ public class Organizacion {
     }
 
     public static List<EstadoAbastecimiento> darEfectosDeAlta() {
-        Estado conStock = new ConStock();
+        Efecto vestuarioEfecto = new Efecto(1, "Vestuario", 150L,"kg",new Vestuario());
+        EstadoAbastecimiento vestuarioEstado = new EstadoAbastecimiento(vestuarioEfecto,50,null,  new ConStock());
 
-        Clase vestuarioClase = new Vestuario();
-        Efecto vestuarioEfecto = new Efecto(1, "Vestuario", 150L,"kg",vestuarioClase);
-        EstadoAbastecimiento vestuarioEstado = new EstadoAbastecimiento(vestuarioEfecto,50,null, conStock);
+        Efecto municionEfecto = new Efecto(2, "Municion", 150L,"kg", new Municion());
+        EstadoAbastecimiento municionEstado = new EstadoAbastecimiento(municionEfecto, 50,null, new ConStock());
 
-        Clase municionClase = new Municion();
-        Efecto municionEfecto = new Efecto(2, "Municion", 150L,"kg",municionClase);
-        EstadoAbastecimiento municionEstado = new EstadoAbastecimiento(municionEfecto, 50,null,conStock);
+        Efecto racionamientoEfecto = new Efecto(3, "Racionamiento", 150L,"kg",new Racionamiento());
+        EstadoAbastecimiento racionamientoEstado = new EstadoAbastecimiento(racionamientoEfecto,50,null, new ConStock());
 
-
-        Clase racionamientoClase = new Racionamiento();
-        Efecto racionamientoEfecto = new Efecto(3, "Racionamiento", 150L,"kg",racionamientoClase);
-        EstadoAbastecimiento racionamientoEstado = new EstadoAbastecimiento(racionamientoEfecto,50,null,conStock);
-
-
-        Clase combustibleClase = new Combustible();
-        Efecto combustibleEfecto = new Efecto(4, "Combustible", 150L,"l",combustibleClase);
-        EstadoAbastecimiento combustibleEstado = new EstadoAbastecimiento(combustibleEfecto,50,null,conStock);
+        Efecto combustibleEfecto = new Efecto(4, "Combustible", 150L,"l",new Combustible());
+        EstadoAbastecimiento combustibleEstado = new EstadoAbastecimiento(combustibleEfecto,50,null, new ConStock());
 
         List<EstadoAbastecimiento> lista = new ArrayList<>();
-        lista.add(vestuarioEstado);
-        lista.add(racionamientoEstado);
-        lista.add(municionEstado);
-        lista.add(combustibleEstado);
+        lista.add(vestuarioEstado);lista.add(racionamientoEstado);lista.add(municionEstado);lista.add(combustibleEstado);
 
         return lista;
     }
 
+
     public void generarMovimiento(String efecto, Long cantidad, String tipo) {
-        for(EstadoAbastecimiento estadoAbastecimiento : this.getEstados()) {
-            if(estadoAbastecimiento.getEfecto().getDescripcionTipo().equals(efecto)) {
-                Movimiento mov = null;
-                if (tipo.equalsIgnoreCase("egreso")) {
-                    mov = new Egreso(cantidad, "egreso");
-                } else if (tipo.equalsIgnoreCase("ingreso")) {
-                    mov = new Ingreso(cantidad, "ingreso");
-                }
-                estadoAbastecimiento.getMovimientos().add(mov);
-                estadoAbastecimiento.getEfecto().setCantidad(
-                        mov.realizarMovimiento(estadoAbastecimiento.getEfecto().getCantidad()));
-                calcularEstado(estadoAbastecimiento);
-            }
-        }
+        this.getEstados().stream()
+                .filter(abastecimiento -> abastecimiento.getEfecto().getDescripcionTipo().contains(efecto))
+                .forEach(abastecimiento -> {
+                    Movimiento mov = null;
+                    if (tipo.equalsIgnoreCase("egreso")) {
+                        mov = new Egreso(cantidad, "egreso");
+                    } else if (tipo.equalsIgnoreCase("ingreso")) {
+                        mov = new Ingreso(cantidad, "ingreso");
+                    }
+                    abastecimiento.getMovimientos().add(mov);
+                    abastecimiento.getEfecto().setCantidad(mov.realizarMovimiento(abastecimiento.getEfecto().getCantidad()));
+                    calcularEstado(abastecimiento);
+                });
     }
 
     private void calcularEstado(EstadoAbastecimiento estadoAbastecimiento) {
-        Estado conFaltantes = new ConFaltantes();
-        Estado conStock = new ConStock();
-
         if( estadoAbastecimiento.getEfecto().getCantidad() <= estadoAbastecimiento.getCantidadnecesaria())
             if(estadoAbastecimiento.getEstado().getEstado().contains("stock"))
-                estadoAbastecimiento.setEstado(conFaltantes);
-
+                estadoAbastecimiento.setEstado(new ConFaltantes());
         if( estadoAbastecimiento.getEfecto().getCantidad() > estadoAbastecimiento.getCantidadnecesaria())
             if(estadoAbastecimiento.getEstado().getEstado().contains("faltantes"))
-                estadoAbastecimiento.setEstado(conStock);
+                estadoAbastecimiento.setEstado(new ConStock());
     }
 
     public void imprimirEfectos() {
-        for (EstadoAbastecimiento estado : this.getEstados()) {
-            estado.imprimir();
-            if(estado.getMovimientos().size() > 0)
-                estado.imprimirMovimientos();
-        }
+        this.getEstados().stream()
+                .forEach(abastecimiento -> {
+                    abastecimiento.imprimir();
+                    if(abastecimiento.getMovimientos().size() > 0)
+                        abastecimiento.imprimirMovimientos();
+                });
     }
 
     public String getNombre() {return nombre;}

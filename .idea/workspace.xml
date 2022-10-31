@@ -5,33 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5465570-d993-4e1d-95c9-9897227b8f60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/Efecto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/EstadoAbastecimiento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/clase/Clase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/clase/impl/Combustible.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/clase/impl/Municion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/clase/impl/Racionamiento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/clase/impl/Vestuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/estado/Estado.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/estado/impl/ConFaltantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/estado/impl/ConStock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/movimiento/Movimiento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/movimiento/impl/Egreso.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/movimiento/impl/Ingreso.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/organizacion/Ubicacion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/requerimiento/Requerimiento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/requerimiento/Solicitud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/organizacion/Organizacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/organizacion/Organizacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/requerimiento/Requerimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/requerimiento/Requerimiento.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +20,16 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -72,7 +60,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Francisco/workspace/ReLog&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Francisco/Desktop/SuperProf/ventas-online&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -102,6 +90,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -129,11 +126,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/requerimiento/Requerimiento.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/Main.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ar/edu/undef/fie/control_de_stock/efecto/estado/Estado.java</url>
+          <line>4</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ReLog$OrganizacionTest.ic" NAME="OrganizacionTest Coverage Results" MODIFIED="1667083428077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
