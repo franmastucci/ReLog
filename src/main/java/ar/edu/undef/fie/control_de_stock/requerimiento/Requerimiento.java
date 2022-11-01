@@ -50,9 +50,10 @@ public class Requerimiento {
     }
 
     public void cargarSolicitudes(List<Solicitud> solicitudes) {
-        for(Solicitud s : this.getSolicitudes()) {
-            this.getSolicitudes().add(s);
-        }
+        this.getSolicitudes().stream()
+                .forEach(solicitud -> {
+                    this.getSolicitudes().add(solicitud);
+                });
     }
 
     public void confirmarRequerimiento() {

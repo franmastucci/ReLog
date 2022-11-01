@@ -19,12 +19,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-
-
         Organizacion org = Organizacion.altaOrganizacion("ong", null);
 
         org.generarMovimiento("Vestuario",120L, "egreso");
-        org.generarMovimiento("Vestuario",120L, "ingreso");
+        //org.generarMovimiento("Vestuario",120L, "ingreso");
         org.generarMovimiento("Combustible",15L, "egreso");
         org.generarMovimiento("Racionamiento",100L, "egreso");
 
@@ -36,19 +34,7 @@ public class Main {
         req.confirmarRequerimiento();
         System.out.println("\nrequerimiento confirmado: "+req.getConfirmacion());
 
-       // org.getEstados().stream()
-         //       .filter(estadoAbastecimiento ->
-           //             estadoAbastecimiento.getEstado().getEstado().contains("stock"))
-             //   .forEach(estadoAbastecimiento ->
-               //         System.out.println(estadoAbastecimiento.getEfecto().getDescripcionTipo() + " " + estadoAbastecimiento.getEstado().getEstado()));
-
-        org.getEstados().stream()
-                .filter(estadoAbastecimiento ->
-                        estadoAbastecimiento.getEstado().getEstado().contains("stock"))
-                .forEach(estadoAbastecimiento -> {
-                    System.out.println(estadoAbastecimiento.getEfecto().getTipo());
-                });
     }
 
-    }
+}
 
