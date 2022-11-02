@@ -12,6 +12,8 @@ import ar.edu.undef.fie.control_de_stock.organizacion.Organizacion;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Requerimiento {
 
@@ -19,6 +21,7 @@ public class Requerimiento {
     private LocalDateTime fechaRequeridaEntrega;
     private List<Solicitud> solicitudes;
     private Boolean confirmacion = false;
+    private static Logger logger = Logger.getLogger("log");
 
     private  Requerimiento(Organizacion organizacion, LocalDateTime fechaRequeridaEntrega) {
         this.organizacion = organizacion;
@@ -30,54 +33,48 @@ public class Requerimiento {
         return new Requerimiento(org,date);
     }
 
-    public void cargarSolicitud(Long tipo, Long cantidad) {
-        this.getSolicitudes().add(this.crearSolicitud(tipo, cantidad));
+    public void     cargarSolicitud(Long tipo, Long cantidad) {
+        if(this.crearSolicitud(tipo, cantidad)!= null)
+            this.getSolicitudes().add(this.crearSolicitud(tipo, cantidad));
     }
 
     private Solicitud crearSolicitud(Long tipo, Long cantidad) {
         if (tipo == 1L) {
-            Clase vestuarioClase = new Vestuario();
-            Efecto vestuarioEfecto = new Efecto(1, "Vestuario", cantidad, "kg", vestuarioClase);
-            return new Solicitud(vestuarioEfecto, vestuarioEfecto.getCantidad());
+            return new Solicitud(new Efecto(1, "Vestuario", cantidad, "kg", new Vestuario()), cantidad);
         } else if (tipo == 2L) {
-            Clase municionClase = new Municion();
-            Efecto municionEfecto = new Efecto(2, "Municion", cantidad, "kg", municionClase);
-            return new Solicitud(municionEfecto, municionEfecto.getCantidad());
+            return new Solicitud(new Efecto(2, "Municion", cantidad, "kg", new Municion()), cantidad);
         } else if (tipo == 3L) {
-            Clase racionamientoClase = new Racionamiento();
-            Efecto racionamientoEfecto = new Efecto(3, "Racionamiento", cantidad, "kg", racionamientoClase);
-            return new Solicitud(racionamientoEfecto, racionamientoEfecto.getCantidad());
+            return new Solicitud(new Efecto(3, "Racionamiento", cantidad, "kg", new Racionamiento()), cantidad);
         } else if (tipo == 4L) {
-            Clase combustibleClase = new Combustible();
-            Efecto combustibleEfecto = new Efecto(4, "Combustible", cantidad, "kg", combustibleClase);
-            return  new Solicitud(combustibleEfecto, combustibleEfecto.getCantidad());
+            return  new Solicitud( new Efecto(4, "Combustible", cantidad, "kg", new Combustible()), cantidad);
         } else {
-            System.err.println("ERROR no se encontró el efecto");
+            logger.log(Level.INFO, "no se encontró el efecto");
         }
         return null;
     }
 
     public void cargarSolicitudes(List<Solicitud> solicitudes) {
-        for(Solicitud s : this.getSolicitudes()) {
-            this.getSolicitudes().add(s);
-        }
+        this.getSolicitudes().stream()
+                .forEach(solicitud -> {
+                    this.getSolicitudes().add(solicitud);
+                });
     }
 
     public void confirmarRequerimiento() {
         if(!this.getSolicitudes().isEmpty()) {
             confirmacion = true;
-            for (EstadoAbastecimiento a : organizacion.getEstados()) {
-                for(Solicitud s : this.getSolicitudes()) {
-                    if(a.getEfecto().getTipo().equals(s.getTipo().getTipo())) {
-                        if(a.getCantidadnecesaria() < a.getEfecto().getCantidad()) {
-                            System.err.println("No se puede confirmar el requerimiento, la clase "
-                                    + a.getEfecto().getDescripcionTipo() + " no tiene faltantes");
-                            confirmacion = false;
-                            break;
-                        }
-                    }
-                }
-            }
+            organizacion.getEstados().stream()
+                    .forEach(abastecimiento -> {
+                        this.getSolicitudes().stream()
+                                .filter(solicitud -> abastecimiento.getEfecto().getTipo().equals(solicitud.getTipo().getTipo()))
+                                .filter(solicitud -> abastecimiento.getCantidadnecesaria() < abastecimiento.getEfecto().getCantidad())
+                                .forEach(solicitud -> {
+                                    logger.log(Level.INFO, "No se puede confirmar el requerimiento, la clase " + abastecimiento.getEfecto().getDescripcionTipo() + " no tiene faltantes");
+                                    confirmacion = false;
+                                } );
+                    } );
+        } else {
+            logger.log(Level.INFO, "el requerimiento no se puede confirmar, no hay solicitudes asociadas");
         }
     }
 
