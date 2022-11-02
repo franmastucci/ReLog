@@ -12,6 +12,8 @@ import ar.edu.undef.fie.control_de_stock.organizacion.Organizacion;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Requerimiento {
 
@@ -19,6 +21,7 @@ public class Requerimiento {
     private LocalDateTime fechaRequeridaEntrega;
     private List<Solicitud> solicitudes;
     private Boolean confirmacion = false;
+    private static Logger logger = Logger.getLogger("log");
 
     private  Requerimiento(Organizacion organizacion, LocalDateTime fechaRequeridaEntrega) {
         this.organizacion = organizacion;
@@ -30,8 +33,9 @@ public class Requerimiento {
         return new Requerimiento(org,date);
     }
 
-    public void cargarSolicitud(Long tipo, Long cantidad) {
-        this.getSolicitudes().add(this.crearSolicitud(tipo, cantidad));
+    public void     cargarSolicitud(Long tipo, Long cantidad) {
+        if(this.crearSolicitud(tipo, cantidad)!= null)
+            this.getSolicitudes().add(this.crearSolicitud(tipo, cantidad));
     }
 
     private Solicitud crearSolicitud(Long tipo, Long cantidad) {
@@ -44,7 +48,7 @@ public class Requerimiento {
         } else if (tipo == 4L) {
             return  new Solicitud( new Efecto(4, "Combustible", cantidad, "kg", new Combustible()), cantidad);
         } else {
-            System.err.println("ERROR no se encontró el efecto");
+            logger.log(Level.INFO, "no se encontró el efecto");
         }
         return null;
     }
@@ -65,12 +69,12 @@ public class Requerimiento {
                                 .filter(solicitud -> abastecimiento.getEfecto().getTipo().equals(solicitud.getTipo().getTipo()))
                                 .filter(solicitud -> abastecimiento.getCantidadnecesaria() < abastecimiento.getEfecto().getCantidad())
                                 .forEach(solicitud -> {
-                                    System.err.println("No se puede confirmar el requerimiento, la clase " + abastecimiento.getEfecto().getDescripcionTipo() + " no tiene faltantes");
+                                    logger.log(Level.INFO, "No se puede confirmar el requerimiento, la clase " + abastecimiento.getEfecto().getDescripcionTipo() + " no tiene faltantes");
                                     confirmacion = false;
                                 } );
                     } );
         } else {
-            System.err.println("el requerimiento no se puede confirmar, no hay solicitudes asociadas");
+            logger.log(Level.INFO, "el requerimiento no se puede confirmar, no hay solicitudes asociadas");
         }
     }
 

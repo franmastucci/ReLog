@@ -34,6 +34,9 @@ public class Main {
         req.confirmarRequerimiento();
         System.out.println("\nrequerimiento confirmado: "+req.getConfirmacion());
 
+        org.agregarRequerimiento(req);
+        org.imprimirEfectos();
+
     }
 
 }

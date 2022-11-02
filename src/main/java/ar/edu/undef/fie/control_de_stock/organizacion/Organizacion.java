@@ -13,16 +13,21 @@ import ar.edu.undef.fie.control_de_stock.efecto.estado.impl.ConStock;
 import ar.edu.undef.fie.control_de_stock.efecto.movimiento.Movimiento;
 import ar.edu.undef.fie.control_de_stock.efecto.movimiento.impl.Egreso;
 import ar.edu.undef.fie.control_de_stock.efecto.movimiento.impl.Ingreso;
+import ar.edu.undef.fie.control_de_stock.requerimiento.Requerimiento;
 import ar.edu.undef.fie.control_de_stock.requerimiento.Solicitud;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Organizacion {
 
     private  String nombre;
     private List<EstadoAbastecimiento> estados;
     private Ubicacion pocision;
+
+    private static Logger logger = Logger.getLogger("log");
 
     private  Organizacion(String nombre, List<EstadoAbastecimiento> estados, Ubicacion pocision) {
         this.nombre = nombre;
@@ -60,7 +65,7 @@ public class Organizacion {
 
     public void generarMovimiento(String efecto, Long cantidad, String tipo) {
         this.getEstados().stream()
-                .filter(abastecimiento -> abastecimiento.getEfecto().getDescripcionTipo().contains(efecto))
+                .filter(abastecimiento -> abastecimiento.getEfecto().getDescripcionTipo().equalsIgnoreCase(efecto))
                 .forEach(abastecimiento -> {
                     Movimiento mov = null;
                     if (tipo.equalsIgnoreCase("egreso")) {
@@ -70,6 +75,7 @@ public class Organizacion {
                     }
                     abastecimiento.getMovimientos().add(mov);
                     abastecimiento.getEfecto().setCantidad(mov.realizarMovimiento(abastecimiento.getEfecto().getCantidad()));
+                    logger.log(Level.INFO, "Movimiento agregado");
                     calcularEstado(abastecimiento);
                 });
     }
@@ -90,6 +96,22 @@ public class Organizacion {
                     if(abastecimiento.getMovimientos().size() > 0)
                         abastecimiento.imprimirMovimientos();
                 });
+    }
+
+    public void agregarRequerimiento(Requerimiento req ){
+        if(req.getConfirmacion().equals(true) && req.getOrganizacion().getNombre().equals(this.getNombre())) {
+            req.getSolicitudes().stream()
+                    .forEach(solicitud -> {
+                        this.getEstados().stream()
+                                .filter(abastecimiento -> abastecimiento.getEfecto().getTipo().equals(solicitud.getTipo().getTipo()))
+                                .forEach(abastecimiento -> {
+                                    this.generarMovimiento(solicitud.getTipo().getDescripcionTipo(), solicitud.getTipo().getCantidad(),"ingreso");
+                                    abastecimiento.getEfecto().setCantidad(abastecimiento.getEfecto().getCantidad()+ solicitud.getTipo().getCantidad());
+                                });
+                    });
+
+            logger.log(Level.INFO, "Requerimiento agregado");
+        }
     }
 
     public String getNombre() {return nombre;}
